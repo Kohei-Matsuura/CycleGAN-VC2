@@ -5,5 +5,5 @@ An implementation of [Kaneko+ 2019](http://www.kecl.ntt.co.jp/people/kaneko.taku
 Original
 ![orig](img/orig.png)
 
-After step 50000
+After 50000 steps
 ![s50000](img/step50000.png)
