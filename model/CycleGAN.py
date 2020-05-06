@@ -70,9 +70,16 @@ class CycleGAN(nn.Module):
 
         return d
 
-    def convert(self, source):
+    def convert_st(self, source):
         r"""
         To show a generated image
         (1, T, 40) -> (1, T, 40)
         """
         return self.Gst(source)
+
+    def convert_ts(self, target):
+        r"""
+        To show a generated image
+        (1, T, 40) -> (1, T, 40)
+        """
+        return self.Gts(target)
