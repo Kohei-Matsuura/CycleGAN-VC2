@@ -1,6 +1,11 @@
 # Cycle-GAN-VC2
 An implementation of [Kaneko+ 2019](http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/cyclegan-vc2/index.html)
 
+## Requirements
+Python >= 3.6.0  
+PyTorch >= 1.0  
+(If anything else, please give me an issue.)
+
 ## Recipe
 ```
 echo Start training...
