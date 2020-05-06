@@ -86,11 +86,11 @@ print('{:-^20}'.format(' Start training... '))
 start_time = int(round(time.time()))
 for s in range(0, hd['STEP_NUM']):
     # Shuffling target data once in 10000 times
-    if s % 10000 == 0:
+    if (s + 1) % 10000 == 0:
         random.shuffle(target_dirs)
 
     # Deleting identity loss
-    if s == hd['IDT_STOP_STEP']:
+    if (s + 1) == hd['IDT_STOP_STEP']:
         hd['Lambda_idt'] = 0.0
 
     # Modifying features into tensors
@@ -157,7 +157,7 @@ for s in range(0, hd['STEP_NUM']):
 
     # Status print
     print()
-    print('Step: {}'.format(s))
+    print('Step: {}'.format(s + 1))
     print('{} seconds have passed.'.format(int(round(time.time())) - start_time))
     print('Adversarial Loss (G): {}'.format(round(L_adv_G.item(), 3)))
     print('Adversarial Loss (D): {}'.format(round(L_adv_D.item(), 3)))
@@ -166,19 +166,7 @@ for s in range(0, hd['STEP_NUM']):
     sys.stdout.flush()
 
     # Saving
-    if s%hd['SAVE_PERIOD'] == 0 and s > 0:
-        torch.save(model.state_dict(), SAVE_DIR + '/params/step{}.net'.format(s))
-        torch.save(opt_D.state_dict(), SAVE_DIR + '/params/step{}.opt_D'.format(s))
-        torch.save(opt_G.state_dict(), SAVE_DIR + '/params/step{}.opt_G'.format(s))
-
-    # Appendix: for validation by watching a generated image
-    if s % 1000 == 0:
-        tmp_source = ctools.load_dat(source_dirs[-1])
-        tmp_source = tmp_source[:len(tmp_source) - len(tmp_source)%4, :]
-        tmp_source = torch.tensor(tmp_source).unsqueeze(0).to(DEVICE)
-        generated_target = model.convert(tmp_source).squeeze(0).detach()
-        tools.tensor_to_img(generated_target, SAVE_DIR + '/step{}.png'.format(s))
-
-    if s == 0:
-        tmp_source = torch.tensor(ctools.load_dat(source_dirs[-1])).detach()
-        tools.tensor_to_img(tmp_source, SAVE_DIR + '/original.png'.format(s))
+    if (s + 1) % hd['SAVE_PERIOD'] == 0 and (s + 1) > 0:
+        torch.save(model.state_dict(), SAVE_DIR + '/params/step{}.net'.format(s + 1))
+        #torch.save(opt_D.state_dict(), SAVE_DIR + '/params/step{}.opt_D'.format(s))
+        #torch.save(opt_G.state_dict(), SAVE_DIR + '/params/step{}.opt_G'.format(s))
